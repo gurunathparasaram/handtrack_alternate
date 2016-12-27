@@ -128,3 +128,4 @@ title('With Boundaries, from bwboundaries()', 'FontSize', fontSize);
 hold on;
 boundaries = bwboundaries(binaryImage);
 numberOfBoundaries = size(boundaries, 1); % Gives Number of Boundaries
+
