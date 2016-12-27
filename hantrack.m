@@ -98,3 +98,33 @@ imshow(BW2)
 j=0;
 tmp=[];
 I=imrot;
+for i=1:imht
+    if(I(i,round(centy))==1)
+        j=j+1;
+        tmp(j)=i;
+    end
+    xr=max(tmp);
+    yr=centy;
+end 
+figure(12)
+imshow(imrot);title('Rotated image with reference point');hold on;
+plot(yr,xr,'r.');
+figure(13)
+imshow(BW2);title('contour image with reference point ');hold on;
+plot(yr,xr,'r.');
+
+% centre = props.Centroid;
+% [rows, cols] = find(BW2);
+% dists = sqrt((rows-xr).^2 + (cols-yr).^2);
+imrot = uint8(imrot);
+imrot = imgaussfilt(imrot, 2);
+binaryImage = imrot;
+
+fontSize = 13;
+imshow(binaryImage);
+axis on;
+title('Binary Image', 'FontSize', fontSize);
+title('With Boundaries, from bwboundaries()', 'FontSize', fontSize);
+hold on;
+boundaries = bwboundaries(binaryImage);
+numberOfBoundaries = size(boundaries, 1); % Gives Number of Boundaries
