@@ -158,4 +158,53 @@ for k = 1 : size(boundary1, 1)
 	allDistances = sqrt((boundary2x - boundary1x).^2 + (boundary2y - boundary1y).^2);
 	% Find closest point, min distance.
 % 	[maxDistance, indexOfMax1] = findpeaks(allDistances);
+maxDistance1 = medfilt1(allDistances,10);
+[maxDistance, indexOfMax] = findpeaks(maxDistance1);
+
+% alpha = 0.15;
+% maxDistance1 = filter(alpha, [1 alpha-1], allDistances);
+% [maxDistance, indexOfMax] = findpeaks(maxDistance1);
+
+% 	if maxDistance(k) < overallMaxDistance
+		x1 = boundary1x(indexOfMax);
+		y1 = boundary1y(indexOfMax);
+		x2 = boundary2x;
+		y2 = boundary2y;
+		overallMaxDistance = maxDistance;
+	end
+% end
+% Find the overall min distance
+% maxDistance = max(maxDistance);
+% Report to command window.
+% maxDistance
+
+% Draw a line between point 1 and 2
+for i = 1:size(x1,1)
+line([x1(i), x2], [y1(i), y2], 'Color', 'b', 'LineWidth', 3);
+end
+
+
+% [pks,locs] = findpeaks(allDistances);
+figure(14),
+findpeaks(maxDistance)
+text(indexOfMax+.02,maxDistance,num2str((1:numel(maxDistance))'))
+
+KK = sort(maxDistance);
+M1= min(allDistances,KK(1));
+minDistance1 = medfilt1(M1,50);
+[minDistance, indexOfmin] = findpeaks(minDistance1);
+x1 = boundary1x(indexOfmin);
+y1 = boundary1y(indexOfmin);
+x2 = boundary2x;
+y2 = boundary2y;
+figure(15)
+imshow(BW2);title('contour image with reference point ');hold on;
+plot(yr,xr,'r.');
+for i = 1:size(x1,1)
+line([x1(i), x2], [y1(i), y2], 'Color', 'g', 'LineWidth', 3);
+end
+M2= min(allDistances,KK(3));
+M3= min(allDistances,KK(4));
+M4= min(allDistances,KK(5));
+
 
