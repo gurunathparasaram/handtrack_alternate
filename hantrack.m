@@ -128,3 +128,33 @@ title('With Boundaries, from bwboundaries()', 'FontSize', fontSize);
 hold on;
 boundaries = bwboundaries(binaryImage);
 numberOfBoundaries = size(boundaries, 1); % Gives Number of Boundaries
+
+for k = 1 : numberOfBoundaries
+	thisBoundary = boundaries{k};
+	plot(thisBoundary(:,2), thisBoundary(:,1), 'r', 'LineWidth', 3);
+end
+hold off;
+
+% Define object boundaries
+numberOfBoundaries = size(boundaries, 1)
+message = sprintf('Found %d boundaries', numberOfBoundaries);
+uiwait(helpdlg(message));
+boundary1 = boundaries{1};
+boundary2 = [round(yr),round(xr)];
+boundary1x = boundary1(:, 2);
+boundary1y = boundary1(:, 1);
+x1=1;
+y1=1;
+x2=1;
+y2=1;
+overallMaxDistance = inf; % Initialize.
+% For every point in boundary 2, find the distance to every point in boundary 1.
+
+for k = 1 : size(boundary1, 1)
+	% Pick the next point on boundary 2.
+	boundary2x = boundary2(1);
+	boundary2y = boundary2(2);
+	% For this point, compute distances from it to all points in boundary 1.
+	allDistances = sqrt((boundary2x - boundary1x).^2 + (boundary2y - boundary1y).^2);
+	% Find closest point, min distance.
+% 	[maxDistance, indexOfMax1] = findpeaks(allDistances);
